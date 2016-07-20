@@ -9,7 +9,7 @@ namespace Library
   {
     public HomeModule()
     {
-      Get["/"]=_=>View["index.cshtml"];
+      Get["/"]=_=>View["table_test.cshtml"];
 
 
     }
