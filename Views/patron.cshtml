@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>University Registrar</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href="/Content/css/styles.css">
+</head>
+<body>
+  <div class="page-header">
+    <h1>Patron Name</h1>
+  </div>
+
+  <div class="container">
+
+    <table class="table table-striped">
+      <h2>Checked out items</h2>
+      <tbody>
+      @for (int i = 0; i < Model.Count; i++)
+      {
+        <tr>
+          <td>@Model[i]</td>
+          <td>
+            <form class="form-group" action="/students/new" method="post">
+              <input type="hidden" name="enrollment-date" required>
+              <button type="submit" class="btn-primary">Renew</button>
+            </form>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+    <h2>
+      Find a book
+    </h2>
+    <form action = "/books/search/title" method = "get">
+      <label for = "book-title">Search by title</label>
+      <input id = "book-title" name = "book-title" type = "text" value = "">
+      <button type = "submit" class="btn-primary">Search</button>
+    </form>
+    <form action = "/books/search/author" method = "get">
+      <label for = "book-author">Search by author</label>
+      <input id = "book-author" name = "book-author" type = "text" value = "">
+      <button type = "submit" class="btn-primary">Search</button>
+    </form>
+    <br>
+    <h2>Patron Info</h2>
+    <p>
+      <a href="/patrons/{id}/edit">Edit patron info</a>
+    </p>
+    <br>
+    <p>
+      <a href="/">Return Home</a>
+    </p>
+  </div>
+</body>
+</html>

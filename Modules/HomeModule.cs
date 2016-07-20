@@ -9,8 +9,13 @@ namespace Library
   {
     public HomeModule()
     {
-      Get["/"]=_=>View["table_test.cshtml"];
+      //Get["/"]=_=>View["index.cshtml"];
 
+      Get["/"]=_=>
+      {
+        List<string> model = new List<string> {"one", "two", "three"};
+        return View["patron.cshtml", model];
+      };
 
     }
   }
