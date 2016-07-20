@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>@Model.GetName()</title>
+  </head>
+  <body>
+    <h1>@Model.GetName()</h1>
+
+    <p>
+      Enrollment Date: @Model.GetEnrollmentDate();
+    </p>
+
+    <h4>Courses:</h4>
+    @if(Model.GetCourses().Count == 0)
+    {
+      <p>
+        Student has not signed up for any courses
+      </p>
+    }
+    else
+    {
+      <ul>
+        @foreach(var course in Model.GetCourses())
+        {
+          <li>@course.GetName()</li>
+        }
+      </ul>
+    <form class="form-group" action="/students/@Model.GetId()/deleteCourse" method="post">
+      <select name="course">
+        @foreach(var course in Model.GetCourses())
+        {
+          <option value="@course.GetId()">@course.GetName()</option>
+        }
+      </select>
+      <button type="submit">Delete Course</button>
+    </form>
+  }
+  <h4>Add a class</h4>
+  <form class="form-group" action="/students/@Model.GetId()/addCourse" method="post">
+    <select name="course">
+      @foreach(var course in Model.GetAllCourses())
+      {
+        if(!Model.GetCourses().Contains(course))
+        {
+          <option value="@course.GetId()">@course.GetName()</option>
+        }
+      }
+    </select>
+    <button type="submit">Add Course</button>
+  </form>
+  <form class="form-group" action="/students/@Model.GetId()/updatemajors" method="post">
+  <h4>Majors:</h4>
+  @if(Model.GetMajors().Count == 0)
+  {
+    <p>
+      Student has not declared a major
+    </p>
+    <label for="new-major">New Major:</label>
+    <select name="new-major">
+      <option value="0">Undeclared</option>
+      @foreach(var department in Model.GetAllDepartments())
+      {
+        <option value="@department.GetId()">@department.GetName()</option>
+      }
+    </select>
+  }
+  else if(Model.GetMajors().Count == 1)
+  {
+    <label for="current-major">Current Major:</label>
+    <select name="current-major">
+      <option value="0">Undeclared</option>
+      @foreach(var department in Model.GetAllDepartments())
+      {
+        if(department.GetName() == Model.GetMajors()[0].GetName())
+        {
+          <option selected="selected" value="@department.GetId()">@department.GetName()</option>
+        }
+        else
+        {
+          <option value="@department.GetId()">@department.GetName()</option>
+        }
+      }
+    </select>
+    <label for="additional-major"></label>
+    <select name="additional-major">
+      <option value="0">Undeclared</option>
+      @foreach(var department in Model.GetAllDepartments())
+      {
+        if(department != Model.GetMajors()[0])
+        {
+          <option  value="@department.GetId()">@department.GetName()</option>
+        }
+      }
+    </select>
+  }
+  else
+  {
+    <label for="first-major">First Major:</label>
+    <select name="first-major">
+      <option value="0">Undeclared</option>
+      @foreach(var department in Model.GetAllDepartments())
+      {
+        if(department == Model.GetMajors()[0])
+        {
+          <option selected="selected" value="@department.GetId()">@department.GetName()</option>
+        }
+        else
+        {
+          <option value="@department.GetId()">@department.GetName()</option>
+        }
+      }
+    </select>
+    <label for="second-major">Second Major:</label>
+    <select name="second-major">
+      <option value="0">Undeclared</option>
+      @foreach(var department in Model.GetAllDepartments())
+      {
+        if(department == Model.GetMajors()[1])
+        {
+          <option selected="selected" value="@department.GetId()">@department.GetName()</option>
+        }
+        else
+        {
+          <option value="@department.GetId()">@department.GetName()</option>
+        }
+      }
+    </select>
+  }
+    <button type="submit">Submit</button>
+  </form>
+    <a href="/students">View All Students</a>
+    <a href="/">Home</a>
+  </body>
+</html>
