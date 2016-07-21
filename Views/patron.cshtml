@@ -23,8 +23,10 @@
           <td>@Model["checkouts"][i].GetAuthors()</td>
           <td>@Model["checkouts"][i].GetDueDateString()</td>
           <td>
-            <form class="form-group" action="/students/new" method="post">
-              <input type="hidden" name="enrollment-date" required>
+            <form class="form-group" action="/patrons/renew/" method="post">
+              <input type="hidden" name="_method" value="PATCH">
+              <input name="copy-id" type="hidden" value="@Model["checkouts"][i].GetId()">
+              <input name="patron-id" type="hidden" value="@Model["patron"].GetId()">
               <button type="submit" class="btn-primary">Renew</button>
             </form>
           </td>

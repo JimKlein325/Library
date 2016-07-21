@@ -261,6 +261,27 @@ namespace Library.Objects
 
     }
 
+    public void Renew()
+    {
+      SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("UPDATE copies SET due_date = '2016-08-15' WHERE id = @CopyId;", conn);
+
+     SqlParameter idParameter = new SqlParameter();
+     idParameter.ParameterName = "@CopyId";
+     idParameter.Value = this.GetId();
+
+     cmd.Parameters.Add(idParameter);
+
+     cmd.ExecuteNonQuery();
+
+     if (conn != null)
+     {
+       conn.Close();
+     }
+    }
+
     public string GetDueDateString()
     {
       DateTime dt =  DateTime.Now;
