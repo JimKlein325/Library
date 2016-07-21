@@ -14,19 +14,21 @@ namespace Library
         return View["index.cshtml"];
       };
 
-    //   Get["/patrons/patroninfo"] = _ => {
-    //     Patron patron = new Patron (Request.Form["patron-id"]);
-    //     Dictionary<string, object> model = new Dictionary<string, object>();
-    //     Stylist stylist = Stylist.Find(paramaters.id);
-    //     List<Copy> book_checkouts = Patron.GetCheckOuts();
-    //     List<Copy> copy_checkouts = Patron.GetCheckOuts();
-    //     List<Book> history = Patron.GetHistory();
-    //     model.Add("patron", patron);
-    //     model.Add("checkouts", allClients);
-    //     model.Add("history", allClients);
-    //     return View ["/patron.cshtml", model];
-    //   };
-    //
+      Post["/patrons/patroninfo"] = parameters => {
+        int patronId = Request.Form["patron-id"];
+        Patron patron = Patron.Find(patronId);
+
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        // List<Copy> book_checkouts = Patron.GetCheckOuts();
+        List<Copy> patron_checkouts = Copy.GetCheckedOutCopies(patron);
+        //List<Book> history = Patron.GetHistory();
+        Console.WriteLine("# checkouts:" + patron_checkouts.Count);
+        model.Add("patron", patron);
+        model.Add("checkouts", patron_checkouts);
+        //model.Add("history", allClients);
+        return View ["/patron.cshtml", model];
+      };
+
     }
   }
 }

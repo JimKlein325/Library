@@ -135,6 +135,11 @@ namespace Library.Objects
       return foundBook;
     }
 
+    public string GetTitle(Copy copy)
+    {
+      return "";
+    }
+
     public static void DeleteAll()
      {
        SqlConnection conn = DB.Connection();

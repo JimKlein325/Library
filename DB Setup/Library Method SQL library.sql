@@ -61,3 +61,15 @@ SELECT *  FROM copies WHERE copies.id = 1 AND copies.due_date > '1900-01-01'
 
 -- public void CheckOutCopy(int copyId)
 UPDATE copies SET due_date = '2016-07-31' WHERE id = 2
+
+--public List<Copy> GetCheckedOutCopies()
+SELECT copies.* FROM
+patrons JOIN checkouts ON (patrons.id = checkouts.patron_id)
+	JOIN copies ON (checkouts.copy_id = copies.id)
+WHERE patrons.id = 1
+
+--Copy.GetAuthors
+SELECT authors.* FROM
+books JOIN books_authors ON (books.id = books_authors.book_id)
+	JOIN authors ON (books_authors.author_id = authors.id)
+WHERE books.id = 1 --copy.book_id

@@ -86,5 +86,37 @@ namespace Library.Tests
       //Assert
       Assert.Equal(testBook, foundBook);
     }
+    // [Fact]
+    // public void Test_Save_SavesCopyToCopiesDB()
+    // {
+    //   //Arrange
+    //   Book testBook = new Book("History");
+    //   testBook.Save();
+    //   int testBookId = testBook.GetId();
+    //
+    //   Copy testCopy = new Copy()
+    //
+    //   //Act
+    //   Book foundBook = Book.Find(testBook.GetId());
+    //
+    //   //Assert
+    //   Assert.Equal(testBook, foundBook);
+    // }
+
+    [Fact]
+    public void Test_GetTitle_ForGivenCopy()
+    {
+      //Arrange
+      // Book testBook = new Book("History");
+      // testBook.Save();
+      // Copy testCopy = new Copy()
+      //
+      // //Act
+      // Book foundBook = Book.Find(testBook.GetId());
+      //
+      // //Assert
+      // Assert.Equal(testBook, foundBook);
+    }
+
   }
 }
