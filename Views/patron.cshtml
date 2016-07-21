@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="page-header">
-    <h1>Patron Name</h1>
+    <h1>@Model["patron"].GetName()</h1>
   </div>
 
   <div class="container">
@@ -16,10 +16,12 @@
     <table class="table table-striped">
       <h2>Checked out items</h2>
       <tbody>
-      @for (int i = 0; i < Model.Count; i++)
+      @for (int i = 0; i < Model["copies"].Count; i++)
       {
         <tr>
-          <td>@Model[i]</td>
+          <td>Title</td>
+          <td>Author</td>
+          <td>Due Date</td>
           <td>
             <form class="form-group" action="/students/new" method="post">
               <input type="hidden" name="enrollment-date" required>

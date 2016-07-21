@@ -2,14 +2,34 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>University Registrar</title>
+    <title>Library</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
   <link rel='stylesheet' href="/Content/css/styles.css">
   </head>
   <body>
-    <h1>University Registrar</h1>
-    <a href="/test">Test</a>
-    <a href="/courses">View All Courses</a>
-    <a href="/departments">View All Departments</a>
-  </body>
+    <h1>Library</h1>
+    <p><a href="/test">I'm a Librarian</a></p>
+    <h2>
+      Find a book
+    </h2>
+    <form action = "/books/search/title" method = "get">
+      <label for = "book-title">Search by title</label>
+      <input id = "book-title" name = "book-title" type = "text" value = "">
+      <button type = "submit" class="btn-primary">Search</button>
+    </form>
+    <form action = "/books/search/author" method = "get">
+      <label for = "book-author">Search by author</label>
+      <input id = "book-author" name = "book-author" type = "text" value = "">
+      <button type = "submit" class="btn-primary">Search</button>
+    </form>
+    <br>
+
+    <h2>Patron Info</h2>
+    <form action = "/patrons/patroninfo" method = "get">
+      <label for = "patron-id">Card Number</label>
+      <input id = "patron-id" name = "patron-id" type = "text" value = "1">
+      <button type = "submit" class="btn-primary">View Account</button>
+    </form>
+    <br>
+    <p><a href="/patrons/{id}/edit">Sign up for card</a></p>
 </html>

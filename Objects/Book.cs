@@ -4,29 +4,29 @@ using System;
 
 namespace Library.Objects
 {
-  public class Author
+  public class Book
   {
     private int _id;
-    private string _name;
+    private string _title;
 
-    public Author(string name, int Id = 0)
+    public Book(string title, int Id = 0)
     {
       _id = Id;
-      _name = name;
+      _title = title;
     }
 
-    public override bool Equals(System.Object otherAuthor)
+    public override bool Equals(System.Object otherBook)
     {
-      if (!(otherAuthor is Author))
+      if (!(otherBook is Book))
       {
         return false;
       }
       else
       {
-        Author newAuthor = (Author) otherAuthor;
-        bool idEquality = (this.GetId() == newAuthor.GetId());
-        bool nameEquality = (this.GetName() == newAuthor.GetName());
-        return (idEquality && nameEquality);
+        Book newBook = (Book) otherBook;
+        bool idEquality = (this.GetId() == newBook.GetId());
+        bool titleEquality = (this.GetTitle() == newBook.GetTitle());
+        return (idEquality && titleEquality);
       }
     }
 
@@ -35,27 +35,27 @@ namespace Library.Objects
       return _id;
     }
 
-    public string GetName()
+    public string GetTitle()
     {
-      return _name;
+      return _title;
     }
 
-    public static List<Author> GetAll()
+    public static List<Book> GetAll()
     {
-      List<Author> allAuthors = new List<Author> {};
+      List<Book> allBooks = new List<Book> {};
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM books;", conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
-        string courseName = rdr.GetString(0);
-        int courseId = rdr.GetInt32(1);
-        Author newAuthor = new Author(courseName, courseId);
-        allAuthors.Add(newAuthor);
+        string courseBook = rdr.GetString(0);
+        int bookId = rdr.GetInt32(1);
+        Book newBook = new Book(courseBook, bookId);
+        allBooks.Add(newBook);
       }
 
       if (rdr != null)
@@ -67,7 +67,7 @@ namespace Library.Objects
         conn.Close();
       }
 
-      return allAuthors;
+      return allBooks;
     }
 
     public void Save()
@@ -76,13 +76,13 @@ namespace Library.Objects
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO authors (name) OUTPUT INSERTED.id VALUES (@AuthorName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO books (title) OUTPUT INSERTED.id VALUES (@BookTitle);", conn);
 
-      SqlParameter nameParameter = new SqlParameter();
-      nameParameter.ParameterName = "@AuthorName";
-      nameParameter.Value = this.GetName();
+      SqlParameter titleParameter = new SqlParameter();
+      titleParameter.ParameterName = "@BookTitle";
+      titleParameter.Value = this.GetTitle();
 
-      cmd.Parameters.Add(nameParameter);
+      cmd.Parameters.Add(titleParameter);
 
       rdr = cmd.ExecuteReader();
 
@@ -100,29 +100,29 @@ namespace Library.Objects
       }
     }
 
-    public static Author Find(int id)
+    public static Book Find(int id)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors WHERE id = @AuthorId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM books WHERE id = @BookId;", conn);
       SqlParameter courseIdParameter = new SqlParameter();
-      courseIdParameter.ParameterName = "@AuthorId";
+      courseIdParameter.ParameterName = "@BookId";
       courseIdParameter.Value = id.ToString();
       cmd.Parameters.Add(courseIdParameter);
       rdr = cmd.ExecuteReader();
 
 
-      int foundAuthorId = 0;
-      string foundAuthorName = null;
+      int foundBookId = 0;
+      string foundBookTitle = null;
 
       while(rdr.Read())
       {
-        foundAuthorName = rdr.GetString(0);
-        foundAuthorId = rdr.GetInt32(1);
+        foundBookTitle = rdr.GetString(0);
+        foundBookId = rdr.GetInt32(1);
       }
-      Author foundAuthor = new Author(foundAuthorName, foundAuthorId);
+      Book foundBook = new Book(foundBookTitle, foundBookId);
 
       if (rdr != null)
       {
@@ -132,7 +132,7 @@ namespace Library.Objects
       {
         conn.Close();
       }
-      return foundAuthor;
+      return foundBook;
     }
 
     public static void DeleteAll()

@@ -9,14 +9,24 @@ namespace Library
   {
     public HomeModule()
     {
-      //Get["/"]=_=>View["index.cshtml"];
 
-      Get["/"]=_=>
-      {
-        List<string> model = new List<string> {"one", "two", "three"};
-        return View["patron.cshtml", model];
+      Get["/"]=_=> {
+        return View["index.cshtml"];
       };
 
+    //   Get["/patrons/patroninfo"] = _ => {
+    //     Patron patron = new Patron (Request.Form["patron-id"]);
+    //     Dictionary<string, object> model = new Dictionary<string, object>();
+    //     Stylist stylist = Stylist.Find(paramaters.id);
+    //     List<Copy> book_checkouts = Patron.GetCheckOuts();
+    //     List<Copy> copy_checkouts = Patron.GetCheckOuts();
+    //     List<Book> history = Patron.GetHistory();
+    //     model.Add("patron", patron);
+    //     model.Add("checkouts", allClients);
+    //     model.Add("history", allClients);
+    //     return View ["/patron.cshtml", model];
+    //   };
+    //
     }
   }
 }

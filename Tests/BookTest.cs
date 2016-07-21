@@ -7,9 +7,9 @@ using Library.Objects;
 
 namespace Library.Tests
 {
-  public class AuthorTest : IDisposable
+  public class BookTest : IDisposable
   {
-    public AuthorTest()
+    public BookTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=library_test;Integrated Security=SSPI;";
     }
@@ -18,39 +18,39 @@ namespace Library.Tests
     {
       Author.DeleteAll();
       Patron.DeleteAll();
-      // Student.DeleteAll();
+      Book.DeleteAll();
     }
 
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
     {
       //Arrange, Act
-      int result = Author.GetAll().Count;
+      int result = Book.GetAll().Count;
       //Assert
       Assert.Equal(0,result);
     }
 
     [Fact]
-    public void Test_Equal_ReturnsTrueIfNamesAndIdsAreTheSame()
+    public void Test_Equal_ReturnsTrueIfNamesAndEnrollmentDatesAreTheSame()
     {
       //Arrange, Act
-      Author firstAuthor = new Author("J.R.R. Tolkein");
-      Author secondAuthor = new Author("J.R.R. Tolkein");
+      Book firstBook = new Book("History");
+      Book secondBook = new Book("History");
 
       //Assert
-      Assert.Equal(firstAuthor, secondAuthor);
+      Assert.Equal(firstBook, secondBook);
     }
 
     [Fact]
     public void Test_Save_SavesToDatabase()
     {
       //Arrange
-      Author testAuthor = new Author("History");
+      Book testBook = new Book("History");
 
       //Act
-      testAuthor.Save();
-      List<Author> result = Author.GetAll();
-      List<Author> testList = new List<Author>{testAuthor};
+      testBook.Save();
+      List<Book> result = Book.GetAll();
+      List<Book> testList = new List<Book>{testBook};
 
       //Assert
       Assert.Equal(testList, result);
@@ -60,31 +60,31 @@ namespace Library.Tests
     public void Test_Save_AssignsIdToObject()
     {
       //Arrange
-      Author testAuthor = new Author("History");
+      Book testBook = new Book("History");
 
       //Act
-      testAuthor.Save();
-      Author savedAuthor = Author.GetAll()[0];
+      testBook.Save();
+      Book savedBook = Book.GetAll()[0];
 
-      int result = savedAuthor.GetId();
-      int testId = testAuthor.GetId();
+      int result = savedBook.GetId();
+      int testId = testBook.GetId();
 
       //Assert
       Assert.Equal(testId, result);
     }
 
     [Fact]
-    public void Test_Find_FindsAuthorInDatabase()
+    public void Test_Find_FindsBookInDatabase()
     {
       //Arrange
-      Author testAuthor = new Author("History");
-      testAuthor.Save();
+      Book testBook = new Book("History");
+      testBook.Save();
 
       //Act
-      Author foundAuthor = Author.Find(testAuthor.GetId());
+      Book foundBook = Book.Find(testBook.GetId());
 
       //Assert
-      Assert.Equal(testAuthor, foundAuthor);
+      Assert.Equal(testBook, foundBook);
     }
   }
 }

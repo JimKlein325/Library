@@ -4,28 +4,28 @@ using System;
 
 namespace Library.Objects
 {
-  public class Author
+  public class Patron
   {
     private int _id;
     private string _name;
 
-    public Author(string name, int Id = 0)
+    public Patron(string name, int Id = 0)
     {
       _id = Id;
       _name = name;
     }
 
-    public override bool Equals(System.Object otherAuthor)
+    public override bool Equals(System.Object otherPatron)
     {
-      if (!(otherAuthor is Author))
+      if (!(otherPatron is Patron))
       {
         return false;
       }
       else
       {
-        Author newAuthor = (Author) otherAuthor;
-        bool idEquality = (this.GetId() == newAuthor.GetId());
-        bool nameEquality = (this.GetName() == newAuthor.GetName());
+        Patron newPatron = (Patron) otherPatron;
+        bool idEquality = (this.GetId() == newPatron.GetId());
+        bool nameEquality = (this.GetName() == newPatron.GetName());
         return (idEquality && nameEquality);
       }
     }
@@ -40,22 +40,22 @@ namespace Library.Objects
       return _name;
     }
 
-    public static List<Author> GetAll()
+    public static List<Patron> GetAll()
     {
-      List<Author> allAuthors = new List<Author> {};
+      List<Patron> allPatrons = new List<Patron> {};
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM patrons;", conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
         string courseName = rdr.GetString(0);
         int courseId = rdr.GetInt32(1);
-        Author newAuthor = new Author(courseName, courseId);
-        allAuthors.Add(newAuthor);
+        Patron newPatron = new Patron(courseName, courseId);
+        allPatrons.Add(newPatron);
       }
 
       if (rdr != null)
@@ -67,7 +67,7 @@ namespace Library.Objects
         conn.Close();
       }
 
-      return allAuthors;
+      return allPatrons;
     }
 
     public void Save()
@@ -76,10 +76,10 @@ namespace Library.Objects
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO authors (name) OUTPUT INSERTED.id VALUES (@AuthorName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO patrons (name) OUTPUT INSERTED.id VALUES (@PatronName);", conn);
 
       SqlParameter nameParameter = new SqlParameter();
-      nameParameter.ParameterName = "@AuthorName";
+      nameParameter.ParameterName = "@PatronName";
       nameParameter.Value = this.GetName();
 
       cmd.Parameters.Add(nameParameter);
@@ -100,29 +100,29 @@ namespace Library.Objects
       }
     }
 
-    public static Author Find(int id)
+    public static Patron Find(int id)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors WHERE id = @AuthorId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM patrons WHERE id = @PatronId;", conn);
       SqlParameter courseIdParameter = new SqlParameter();
-      courseIdParameter.ParameterName = "@AuthorId";
+      courseIdParameter.ParameterName = "@PatronId";
       courseIdParameter.Value = id.ToString();
       cmd.Parameters.Add(courseIdParameter);
       rdr = cmd.ExecuteReader();
 
 
-      int foundAuthorId = 0;
-      string foundAuthorName = null;
+      int foundPatronId = 0;
+      string foundPatronName = null;
 
       while(rdr.Read())
       {
-        foundAuthorName = rdr.GetString(0);
-        foundAuthorId = rdr.GetInt32(1);
+        foundPatronName = rdr.GetString(0);
+        foundPatronId = rdr.GetInt32(1);
       }
-      Author foundAuthor = new Author(foundAuthorName, foundAuthorId);
+      Patron foundPatron = new Patron(foundPatronName, foundPatronId);
 
       if (rdr != null)
       {
@@ -132,14 +132,14 @@ namespace Library.Objects
       {
         conn.Close();
       }
-      return foundAuthor;
+      return foundPatron;
     }
 
     public static void DeleteAll()
      {
        SqlConnection conn = DB.Connection();
        conn.Open();
-       SqlCommand cmd = new SqlCommand("DELETE FROM authors; DELETE FROM patrons; DELETE FROM books;", conn);
+       SqlCommand cmd = new SqlCommand("DELETE FROM patrons; DELETE FROM authors; DELETE FROM books;", conn);
        cmd.ExecuteNonQuery();
      }
 
